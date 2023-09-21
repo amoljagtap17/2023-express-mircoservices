@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: express-microservices
+build:
+  local:
+    push: false
+  artifacts:
+    - image: codewithajdotguru/products-app
+      context: products-app
+      docker:
+        dockerfile: Dockerfile
+  tagPolicy:
+    gitCommit: {}
+manifests:
+  rawYaml:
+    - k8s/**/*.yaml
