@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import helmet from "helmet";
 import { NotFoundError } from "./globals/errors/not-found-error";
 import { errorHandler } from "./middleware/error-handler";
+import { healthController } from "./routes/health/health.controller";
 import { productsController } from "./routes/products/products.controller";
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(
 
 app.use(bodyParser.json());
 
+app.use("/", healthController);
 app.use("/api/products-app/products", productsController);
 
 app.all("*", (_req: Request, _res: Response) => {

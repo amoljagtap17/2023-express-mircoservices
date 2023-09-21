@@ -11,7 +11,7 @@ productsController
   .all((_req: Request, _res: Response, next: NextFunction) => {
     next();
   })
-  .get(async (_req: Request, res: Response, _next: NextFunction) => {
+  .get(async (_req: Request, res: Response) => {
     const products = await ProductsService.getProducts();
 
     res.json(products);
@@ -19,7 +19,7 @@ productsController
   .post(
     productsValidators,
     validateRequest,
-    async (req: Request, res: Response, _next: NextFunction) => {
+    async (req: Request, res: Response) => {
       const body = req.body as IProductDTO;
 
       const newProduct = await ProductsService.addProducts(body);

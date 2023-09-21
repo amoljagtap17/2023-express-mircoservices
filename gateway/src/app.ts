@@ -4,6 +4,7 @@ import helmet from "helmet";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { NotFoundError } from "./globals/errors/not-found-error";
 import { errorHandler } from "./middleware/error-handler";
+import { healthController } from "./routes/health/health.controller";
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use(
 );
 
 app.use(bodyParser.json());
+
+app.use("/", healthController);
 
 app.use(
   "/api/products-app",
