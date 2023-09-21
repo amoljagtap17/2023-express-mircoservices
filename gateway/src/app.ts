@@ -1,9 +1,9 @@
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import helmet from "helmet";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import { NotFoundError } from "./globals/errors/not-found-error";
 import { errorHandler } from "./middleware/error-handler";
-import { productsController } from "./routes/products/products.controller";
 
 const app = express();
 
@@ -25,7 +25,13 @@ app.use(
 
 app.use(bodyParser.json());
 
-app.use("/api/products-app/products", productsController);
+app.use(
+  "/api/products-app",
+  createProxyMiddleware({
+    target: "http://products-app-service:3000",
+    changeOrigin: true,
+  })
+);
 
 app.all("*", (_req: Request, _res: Response) => {
   throw new NotFoundError();
