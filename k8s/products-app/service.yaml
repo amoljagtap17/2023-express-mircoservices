@@ -2,9 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: products-app-service
+  labels:
+    job: products-app-job
+    app: products-app-service
 spec:
+  type: ClusterIP
   selector:
     app: products-app
   ports:
-    - port: 3000
+    - name: products-app-port
+      protocol: TCP
+      port: 3000
       targetPort: 3000
